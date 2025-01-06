@@ -3,7 +3,7 @@ import axios, { AxiosResponse } from 'axios';
 import { startRegistration } from '@simplewebauthn/browser';
 
 const Register: React.FC = () => {
-  const [userID, setUserID] = useState('');
+  // const [userID, setUserID] = useState('');
   const [username, setUsername] = useState('');
   const [message, setMessage] = useState('');
 
