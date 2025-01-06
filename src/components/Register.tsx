@@ -6,13 +6,14 @@ const Register: React.FC = () => {
   // const [userID, setUserID] = useState('');
   const [username, setUsername] = useState('');
   const [message, setMessage] = useState('');
+  const domain = process.env.HOST_DOMAIN || 'localhost:3300';
 
   const handleRegister = async () => {
     try {
       // Request registration options from the server
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const response: AxiosResponse<any> = await axios.post(
-        'http://localhost:3300/register',
+        `${domain}/register`,
         {
           username,
         },
@@ -28,7 +29,7 @@ const Register: React.FC = () => {
 
       // Send the credential to the server for verification
       const verificationResponse = await axios.post(
-        'http://localhost:3300/registerFinish',
+        `${domain}/registerFinish`,
         attestationResponse,
         {
           headers: { 'Content-Type': 'application/json' },

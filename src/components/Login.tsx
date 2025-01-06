@@ -5,6 +5,7 @@ import { startAuthentication } from '@simplewebauthn/browser';
 const Login: React.FC = () => {
   const [userID, setUserID] = useState('');
   const [message, setMessage] = useState('');
+  const domain = process.env.HOST_DOMAIN || 'localhost:3300';
 
   const handleLogin = async () => {
     try {
@@ -16,7 +17,7 @@ const Login: React.FC = () => {
       // );
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const response: AxiosResponse<any> = await axios.post(
-        'http://localhost:3300/login',
+        `${domain}/login`,
         {
           username,
         },
@@ -40,7 +41,7 @@ const Login: React.FC = () => {
       // Send the assertion to the server for verification
       console.log(asseResp);
       await axios.post(
-        'http://localhost:3300/verify-login',
+        `${domain}/verify-login`,
         {
           username,
           headers: {
