@@ -5,7 +5,7 @@ import { startAuthentication } from '@simplewebauthn/browser';
 const Login: React.FC = () => {
   const [userID, setUserID] = useState('');
   const [message, setMessage] = useState('');
-  const domain = process.env.HOST_DOMAIN || 'localhost:3300';
+  const domain = import.meta.env.VITE_HOST_DOMAIN || 'localhost:3300';
 
   const handleLogin = async () => {
     try {
@@ -16,6 +16,7 @@ const Login: React.FC = () => {
       //   { username: username }
       // );
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      console.log(domain);
       const response: AxiosResponse<any> = await axios.post(
         `${domain}/login`,
         {

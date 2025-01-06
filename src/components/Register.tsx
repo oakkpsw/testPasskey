@@ -6,12 +6,13 @@ const Register: React.FC = () => {
   // const [userID, setUserID] = useState('');
   const [username, setUsername] = useState('');
   const [message, setMessage] = useState('');
-  const domain = process.env.HOST_DOMAIN || 'localhost:3300';
+  const domain = import.meta.env.VITE_HOST_DOMAIN || 'localhost:3300';
 
   const handleRegister = async () => {
     try {
       // Request registration options from the server
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      console.log(domain);
       const response: AxiosResponse<any> = await axios.post(
         `${domain}/register`,
         {
