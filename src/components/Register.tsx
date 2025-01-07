@@ -6,7 +6,7 @@ const Register: React.FC = () => {
   // const [userID, setUserID] = useState('');
   const [username, setUsername] = useState('');
   const [message, setMessage] = useState('');
-  const domain = import.meta.env.VITE_HOST_DOMAIN || 'localhost:3300';
+  const domain = import.meta.env.VITE_HOST_DOMAIN || 'http://localhost:3300';
 
   const handleRegister = async () => {
     try {
@@ -47,7 +47,7 @@ const Register: React.FC = () => {
       }
     } catch (error) {
       console.error(error);
-      setMessage('Registration failed.');
+      setMessage('Registration failed: ' + error);
     }
   };
 

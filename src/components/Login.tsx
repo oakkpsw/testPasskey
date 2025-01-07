@@ -5,7 +5,7 @@ import { startAuthentication } from '@simplewebauthn/browser';
 const Login: React.FC = () => {
   const [userID, setUserID] = useState('');
   const [message, setMessage] = useState('');
-  const domain = import.meta.env.VITE_HOST_DOMAIN || 'localhost:3300';
+  const domain = import.meta.env.VITE_HOST_DOMAIN || 'http://localhost:3300';
 
   const handleLogin = async () => {
     try {
