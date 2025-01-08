@@ -17,7 +17,7 @@ const Login: React.FC = () => {
       // );
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       console.log(domain);
-      const response: AxiosResponse<any> = await axios.post(
+      const res: AxiosResponse<any> = await axios.post(
         `${domain}/login`,
         {
           username,
@@ -32,9 +32,13 @@ const Login: React.FC = () => {
       // const optionsJSON = {
       //   optionsJSON: response.data,
       // };
+      console.log('res', res);
+      const { options, challengeToken } = res.data;
+      console.log('option:', options);
+      console.log('challengeToken:', challengeToken);
 
       const optionsJSON = {
-        optionsJSON: response.data,
+        optionsJSON: options,
       };
       const payload = 'Your secure message or data';
 
@@ -51,6 +55,7 @@ const Login: React.FC = () => {
           body: {
             asseResp,
             payload,
+            challengeToken,
           },
         },
         { withCredentials: true }
