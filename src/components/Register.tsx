@@ -21,6 +21,13 @@ const Register: React.FC = () => {
         { withCredentials: true } // Important: Ensures cookies are sent and stored
       );
 
+      // Check the session in the response
+      if (response.data.session) {
+        console.log('Session:', response.data.session);
+      } else {
+        console.log('No session returned from server');
+      }
+
       console.log('Registration Options from Server:', response.data);
       const optionsJSON = {
         optionsJSON: response.data,
