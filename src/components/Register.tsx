@@ -11,9 +11,10 @@ const Register: React.FC = () => {
   const handleRegister = async () => {
     try {
       // Request registration options from the server
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       console.log(domain);
-      const response: AxiosResponse<any> = await axios.post(
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const res: AxiosResponse<any> = await axios.post(
         `${domain}/register`,
         {
           username,
@@ -21,16 +22,36 @@ const Register: React.FC = () => {
         { withCredentials: true } // Important: Ensures cookies are sent and stored
       );
 
-      // Check the session in the response
-      if (response.data.session) {
-        console.log('Session:', response.data.session);
-      } else {
-        console.log('No session returned from server');
-      }
+      const { options, challengeToken } = res.data;
 
-      console.log('Registration Options from Server:', response.data);
+      // Step 2: Use WebAuthn to perform the registration
+      // const credential = await startRegistration(options);
+
+      // // Step 3: Send the response to the server for verification
+      // const verificationRes = await fetch(
+      //   'https://your-backend.com/verify-registration-response',
+      //   {
+      //     method: 'POST',
+      //     headers: { 'Content-Type': 'application/json' },
+      //     body: JSON.stringify({
+      //       registrationResponse: credential,
+      //       challengeToken, // Include the challenge token received earlier
+      //     }),
+      //   }
+      // );
+
+      // const verificationResult = await verificationRes.json();
+
+      // // Check the session in the response
+      // if (response.data.session) {
+      //   console.log('Session:', response.data.session);
+      // } else {
+      //   console.log('No session returned from server');
+      // }
+
+      console.log('Registration Options from Server:', options.data);
       const optionsJSON = {
-        optionsJSON: response.data,
+        optionsJSON: options.data,
       };
 
       const attestationResponse = await startRegistration(optionsJSON);
@@ -38,7 +59,10 @@ const Register: React.FC = () => {
       // Send the credential to the server for verification
       const verificationResponse = await axios.post(
         `${domain}/registerFinish`,
-        attestationResponse,
+        {
+          username,
+          body: { attestationResponse, challengeToken },
+        },
         {
           headers: { 'Content-Type': 'application/json' },
           withCredentials: true,
